@@ -5,6 +5,12 @@
       "host": "localhost",
       "database": "expressling_development",
       "port": 27017
+    },
+    "auth": {
+      "github": {
+        "key": "11932f2b6d05d2a5fa18",
+        "secret": "2603d1bc663b74d6732500c1e9ad05b0f4013593"
+      }
     }
   },
   "staging": {

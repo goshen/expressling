@@ -15,7 +15,7 @@ function makeSafe(thisText, allowSpace) {
     var newText = [];
     for (var i = 0; i < thisText.length; i++){
       thisChar = thisText.charAt(i);
-      if(w.indexOf(thisChar) == -1) {
+      if(w.indexOf(thisChar) === -1) {
         if(s.match(''+thisChar+'')) {
           newText[i] = thisChar;
         } else {

@@ -10,6 +10,9 @@ form(action='/login', method='POST')
     label(for='password') Password
     input(type='password', name='password', required)
   #submit
-    input(type='submit', value='Login')
+    input.btn(type='submit', value='Login')
 p: a(href="/forgot-password") Forgot your password?
 p: a(href="/register") Not yet registered?
+#github-login
+    a(href='/auth/github', style='border: 0px')
+      img(style='border: 0px', src='http://github.com/intridea/authbuttons/raw/master/png/github_64.png')

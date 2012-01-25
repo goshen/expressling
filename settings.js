@@ -5,6 +5,7 @@
 var express  = require('express')
   , port     = 3000
   , cacheAge = 24 * 60 * 60 * 1000
+  , everyauth= require('everyauth')
 
   // ## Common
   , fs       = require('fs')
@@ -172,13 +173,22 @@ function createUser(app, db) {
 }
 
 // ## Application Configuration
-exports.bootApplication = function(app, db) {
+exports.bootApplication = function(app, db, config) {
 
   // ### Create Super Admin
   createSuperAdmin(db);
 
   // Create User Group
   createUser(app, db);
+  
+  // everyauth configuration
+  everyauth.github
+    .appId(config.auth.github.key)
+    .appSecret(config.auth.github.secret)
+    .myHostname('http://localhost:8080')
+    .findOrCreateUser(function(session, accessToken, accessTokenExtra, githubUserMetadata) {
+      // find or create user logic goes here
+    });
 
   // ### Default Settings
   app.configure(function() {
@@ -199,6 +209,7 @@ exports.bootApplication = function(app, db) {
     // Favicon
     app.use(express.favicon(__dirname + '/public/favicon.ico'));
     // Extra Route Middleware
+    app.use(everyauth.middleware());
     app.use(logout);
     app.use(loggedIn);
     // Routing (keep this last)
@@ -259,7 +270,7 @@ exports.bootApplication = function(app, db) {
       return '/' === app.route ? '' : app.route;
     },
     // [Flash messages](https://github.com/visionmedia/express-messages/)
-    messages: require('express-messages'),
+    messages: require('./lib/flash-messages'),
     // [Dateformat helper](https://github.com/loopj/commonjs-date-formatting/)
     dateformat: function(req, res) {
       return require('./lib/dateformat').strftime;
@@ -300,6 +311,7 @@ exports.bootApplication = function(app, db) {
       return req.session._csrf;
     }
   });
+  
 };
 
 // ## Error Configuration
@@ -336,7 +348,7 @@ exports.bootErrorConfig = function(app) {
       title: 'Something went wrong, oops!'
     });
   });
-
+  
 };
 
 // ## Load Routes

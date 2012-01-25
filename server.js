@@ -60,8 +60,9 @@ var express = require('express')
 //  You may want to allow all types (e.g. both email and url)
 mongooseTypes.loadTypes(mongoose, 'email');
 
+
 // # Load settings
-settings.bootApplication(app, db);
+settings.bootApplication(app, db, config[env]);
 settings.bootRoutes(app, db);
 settings.bootErrorConfig(app);
 

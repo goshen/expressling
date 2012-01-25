@@ -48,32 +48,41 @@ html(class='no-js', lang='en')
     script(src='/js/libs/modernizr-2.0.6.min.js')
   body
     //- [express-messages](https://github.com/visionmedia/express-messages/)
-    #no-js
+    noscript
       | Please
       a(href='http://enable-javascript.com/', target="_blank") enable JavaScript
       |  to view this website.
-    header
-      h1 Expressling
-    nav
-      ul
-        li: a(href='/') Home
-        - if (access)
-            li: a(href='/admin') Admin
-        - if (loggedIn)
-          li: a(href='/my-account') My Account
-          li: a(href='/logout') Logout
-        - else
-          li: a(href='/login') Login
-    != messages()
-    div(role='main')
+    .navbar.navbar-fixed
+      .navbar-inner
+        .container
+          a(href='#').brand title
+          ul.nav
+            li: a(href='/') Home
+            - if (access)
+                li: a(href='/admin') Admin
+            - if (loggedIn)
+              li: a(href='/my-account') My Account
+              li: a(href='/logout') Logout
+            - else
+              li: a(href='/login') Login
 
-      //- Dynamically load the body content with support for { layout: false }
-      //-  (e.g. index's route and view this through use of extends/inheritance)
-      block body
-        !=body
+    .container
+      .content
+        != messages()
+        .page-header
+          h1 title 
+            small text
+        .row
 
-    footer
-      p Built with <a href="http://expressling.com/">Expressling</a>.
+        //- Dynamically load the body content with support for { layout: false }
+        //-  (e.g. index's route and view this through use of extends/inheritance)
+        block body
+          !=body
+
+    .container 
+      footer
+        p &copy; Company 2011
+    
     //- JavaScript at the bottom for fast page loading
     //- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline
     script(src='//ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js')
